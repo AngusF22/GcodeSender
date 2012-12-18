@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
+
+/*Modified from Otto Hermansson's code by Angus Findlay*/
 
 namespace GrblOutput {
 	public partial class Form1 : Form {
@@ -245,8 +247,6 @@ namespace GrblOutput {
 		private void stopPrintBtn_Click(object sender, EventArgs e) {
 			transfer = false;
 			enableControlsForPrinting();
-			serialPort1.WriteLine("M5");
-			serialPort1.WriteLine("G0 X0 Y0");
 		}
 
 		private void serialResponseList_DrawItem(object sender, DrawItemEventArgs e) {
@@ -270,5 +270,93 @@ namespace GrblOutput {
 				e.DrawFocusRectangle();
 			}
 		}
+
+        private void returnToZero_Click(object sender, EventArgs e)
+        {
+            transfer = false;
+            enableControlsForPrinting();
+            serialPort1.WriteLine("M5");
+            serialPort1.WriteLine("G90");
+            serialPort1.WriteLine("G0 X0 Y0 Z0 F" + feedRate.Value.ToString());
+
+        }
+
+        private void overrideSpeedChkbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void YPbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 X0 Y" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
+            }
+
+        }
+
+        private void YNbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 X0 Y-" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
+            }
+
+
+        }
+
+        private void XNbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 X-" + stepSize.Value.ToString() + " Y0 F" + feedRate.Value.ToString());
+            }
+
+
+        }
+
+        private void XPbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 X" + stepSize.Value.ToString() + " Y0 F" + feedRate.Value.ToString());
+            }
+
+        }
+
+        private void ZNbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 Z-" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
+            }
+
+        }
+
+        private void ZPbutton_Click(object sender, EventArgs e)
+        {
+            if (!transfer)
+            {
+                serialPort1.WriteLine("G91");
+                serialPort1.WriteLine("G0 Z" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
+            }
+
+        }
+
+        private void feedResume_Click(object sender, EventArgs e)
+        {
+            serialPort1.WriteLine("~");
+        }
+
+        private void zeroMachine_Click(object sender, EventArgs e)
+        {
+            if(!transfer)
+            serialPort1.WriteLine("G92 X"+Xoffset.Value.ToString()+" Y"+Yoffset.Value.ToString()+" Z"+Zoffset.Value.ToString());
+        }
 	}
 }
