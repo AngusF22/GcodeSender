@@ -353,10 +353,17 @@ namespace GrblOutput {
             serialPort1.WriteLine("~");
         }
 
+        private void feedHold_Click(object sender, EventArgs e)
+        {
+            serialPort1.WriteLine("~");
+
+        }
+
         private void zeroMachine_Click(object sender, EventArgs e)
         {
             if(!transfer)
             serialPort1.WriteLine("G92 X"+Xoffset.Value.ToString()+" Y"+Yoffset.Value.ToString()+" Z"+Zoffset.Value.ToString());
         }
+
 	}
 }

@@ -69,6 +69,7 @@ namespace GrblOutput {
             this.stepSize = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.feedResume = new System.Windows.Forms.Button();
+            this.feedHold = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedOverrideNumber)).BeginInit();
@@ -188,7 +189,7 @@ namespace GrblOutput {
             // 
             this.serialResponseList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.serialResponseList.FormattingEnabled = true;
-            this.serialResponseList.Location = new System.Drawing.Point(12, 247);
+            this.serialResponseList.Location = new System.Drawing.Point(13, 285);
             this.serialResponseList.Name = "serialResponseList";
             this.serialResponseList.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.serialResponseList.Size = new System.Drawing.Size(584, 251);
@@ -598,19 +599,30 @@ namespace GrblOutput {
             // 
             // feedResume
             // 
-            this.feedResume.Location = new System.Drawing.Point(148, 115);
+            this.feedResume.Location = new System.Drawing.Point(21, 246);
             this.feedResume.Name = "feedResume";
-            this.feedResume.Size = new System.Drawing.Size(122, 19);
+            this.feedResume.Size = new System.Drawing.Size(275, 33);
             this.feedResume.TabIndex = 34;
             this.feedResume.Text = "Feed Resume";
             this.feedResume.UseVisualStyleBackColor = true;
             this.feedResume.Click += new System.EventHandler(this.feedResume_Click);
             // 
+            // feedHold
+            // 
+            this.feedHold.Location = new System.Drawing.Point(302, 246);
+            this.feedHold.Name = "feedHold";
+            this.feedHold.Size = new System.Drawing.Size(275, 33);
+            this.feedHold.TabIndex = 35;
+            this.feedHold.Text = "Feed Hold";
+            this.feedHold.UseVisualStyleBackColor = true;
+            this.feedHold.Click += new System.EventHandler(this.feedHold_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 510);
+            this.ClientSize = new System.Drawing.Size(609, 548);
+            this.Controls.Add(this.feedHold);
             this.Controls.Add(this.feedResume);
             this.Controls.Add(this.scrollOutputChkbox);
             this.Controls.Add(this.groupBox2);
@@ -690,6 +702,7 @@ namespace GrblOutput {
         private System.Windows.Forms.Button feedResume;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown feedRate;
+        private System.Windows.Forms.Button feedHold;
 	}
 }
 
