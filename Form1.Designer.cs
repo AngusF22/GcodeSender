@@ -189,10 +189,10 @@ namespace GrblOutput {
             // 
             this.serialResponseList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.serialResponseList.FormattingEnabled = true;
-            this.serialResponseList.Location = new System.Drawing.Point(13, 285);
+            this.serialResponseList.Location = new System.Drawing.Point(12, 285);
             this.serialResponseList.Name = "serialResponseList";
             this.serialResponseList.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.serialResponseList.Size = new System.Drawing.Size(584, 251);
+            this.serialResponseList.Size = new System.Drawing.Size(264, 147);
             this.serialResponseList.TabIndex = 15;
             this.serialResponseList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.serialResponseList_DrawItem);
             // 
@@ -590,18 +590,18 @@ namespace GrblOutput {
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.Xoffset);
             this.groupBox3.Controls.Add(this.zeroMachine);
-            this.groupBox3.Location = new System.Drawing.Point(19, 140);
+            this.groupBox3.Location = new System.Drawing.Point(13, 132);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(257, 100);
+            this.groupBox3.Size = new System.Drawing.Size(264, 109);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Zero adjust";
             // 
             // feedResume
             // 
-            this.feedResume.Location = new System.Drawing.Point(21, 246);
+            this.feedResume.Location = new System.Drawing.Point(12, 246);
             this.feedResume.Name = "feedResume";
-            this.feedResume.Size = new System.Drawing.Size(275, 33);
+            this.feedResume.Size = new System.Drawing.Size(265, 33);
             this.feedResume.TabIndex = 34;
             this.feedResume.Text = "Feed Resume";
             this.feedResume.UseVisualStyleBackColor = true;
@@ -609,9 +609,9 @@ namespace GrblOutput {
             // 
             // feedHold
             // 
-            this.feedHold.Location = new System.Drawing.Point(302, 246);
+            this.feedHold.Location = new System.Drawing.Point(283, 247);
             this.feedHold.Name = "feedHold";
-            this.feedHold.Size = new System.Drawing.Size(275, 33);
+            this.feedHold.Size = new System.Drawing.Size(314, 33);
             this.feedHold.TabIndex = 35;
             this.feedHold.Text = "Feed Hold";
             this.feedHold.UseVisualStyleBackColor = true;
@@ -621,7 +621,7 @@ namespace GrblOutput {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 548);
+            this.ClientSize = new System.Drawing.Size(609, 443);
             this.Controls.Add(this.feedHold);
             this.Controls.Add(this.feedResume);
             this.Controls.Add(this.scrollOutputChkbox);
@@ -635,8 +635,8 @@ namespace GrblOutput {
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "G-code sender";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing_1);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing_1);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
