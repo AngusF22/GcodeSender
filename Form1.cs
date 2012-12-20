@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 /*Modified from Otto Hermansson's code by Angus Findlay*/
 
-namespace GrblOutput {
+namespace GcodeSender {
 	public partial class Form1 : Form {
 		string RxString;
 		List<string> lines = new List<string>();
@@ -65,7 +65,18 @@ namespace GrblOutput {
 		}
 
 		private void buttonStart_Click(object sender, EventArgs e) {
+            try {
+
 			serialPort1.PortName = comboBox1.SelectedItem.ToString();
+            if (flowControl.Checked)
+            {
+                //serialPort1.Handshake = "XOnXOff";
+            }
+            else
+            {
+                //serialPort1.Handshake = "None";
+            }
+
 			serialPort1.BaudRate = 9600;
 
 			serialPort1.Open();
@@ -74,9 +85,24 @@ namespace GrblOutput {
 				ReloadBtn.Enabled = false;
 				StartBtn.Enabled = false;
 				StopBtn.Enabled = true;
+                YPbutton.Enabled = false;
+                YNbutton.Enabled = false;
+                XPbutton.Enabled = false;
+                XNbutton.Enabled = false;
+                ZPbutton.Enabled = false;
+                ZNbutton.Enabled = false;
+                zeroMachine.Enabled = false;
+                returnToZero.Enabled = false;
+                flowControl.Enabled = false;
 				textBox3.ReadOnly = false;
 				enableControlsForPrinting();
+                timer1.Enabled = true;
 			}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 		}
 
 		private void buttonStop_Click(object sender, EventArgs e) {
@@ -86,11 +112,22 @@ namespace GrblOutput {
 				ReloadBtn.Enabled = true;
 				StartBtn.Enabled = true;
 				StopBtn.Enabled = false;
+                YPbutton.Enabled = true;
+                YNbutton.Enabled = true;
+                XPbutton.Enabled = true;
+                XNbutton.Enabled = true;
+                ZPbutton.Enabled = true;
+                ZNbutton.Enabled = true;
+                zeroMachine.Enabled = true;
+                returnToZero.Enabled = true;
+                flowControl.Enabled = true;
 				textBox3.ReadOnly = true;
 				transfer = false;
 				disableControlsForPrinting();
 				BrowseBtn.Enabled = true;
 				stopPrintBtn.Enabled = false;
+                timer1.Enabled = false;
+
 			}
 
 		}
@@ -273,12 +310,17 @@ namespace GrblOutput {
 
         private void returnToZero_Click(object sender, EventArgs e)
         {
+            try {
             transfer = false;
             enableControlsForPrinting();
             serialPort1.WriteLine("M5");
             serialPort1.WriteLine("G90");
             serialPort1.WriteLine("G0 X0 Y0 Z0 F" + feedRate.Value.ToString());
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void overrideSpeedChkbox_CheckedChanged(object sender, EventArgs e)
@@ -288,82 +330,150 @@ namespace GrblOutput {
 
         private void YPbutton_Click(object sender, EventArgs e)
         {
+            try 
+            {
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 X0 Y" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
             }
+            } catch (Exception ex) {
+				MessageBox.Show(ex.Message);
+			}
 
         }
 
         private void YNbutton_Click(object sender, EventArgs e)
         {
+            try {
+
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 X0 Y-" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
             }
 
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void XNbutton_Click(object sender, EventArgs e)
         {
+            try {
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 X-" + stepSize.Value.ToString() + " Y0 F" + feedRate.Value.ToString());
             }
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
         private void XPbutton_Click(object sender, EventArgs e)
         {
+            try{
+
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 X" + stepSize.Value.ToString() + " Y0 F" + feedRate.Value.ToString());
             }
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ZNbutton_Click(object sender, EventArgs e)
         {
+            try{
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 Z-" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
             }
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ZPbutton_Click(object sender, EventArgs e)
         {
+            try{
+
             if (!transfer)
             {
                 serialPort1.WriteLine("G91");
                 serialPort1.WriteLine("G0 Z" + stepSize.Value.ToString() + " F" + feedRate.Value.ToString());
             }
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void feedResume_Click(object sender, EventArgs e)
         {
+            try {
             serialPort1.WriteLine("~");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void feedHold_Click(object sender, EventArgs e)
         {
-            serialPort1.WriteLine("~");
+            try {
+            serialPort1.WriteLine("!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
         private void zeroMachine_Click(object sender, EventArgs e)
         {
+            try {
+
             if(!transfer)
             serialPort1.WriteLine("G92 X"+Xoffset.Value.ToString()+" Y"+Yoffset.Value.ToString()+" Z"+Zoffset.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.WriteLine("?");
+                grblStatus.Text = serialPort1.ReadLine();
+            }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
 	}
 }

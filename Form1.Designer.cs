@@ -1,4 +1,5 @@
-namespace GrblOutput {
+namespace GcodeSender
+{
 	partial class Form1 {
 		/// <summary>
 		/// Required designer variable.
@@ -39,6 +40,7 @@ namespace GrblOutput {
             this.stopPrintBtn = new System.Windows.Forms.Button();
             this.serialResponseList = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.flowControl = new System.Windows.Forms.CheckBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
@@ -70,6 +72,8 @@ namespace GrblOutput {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.feedResume = new System.Windows.Forms.Button();
             this.feedHold = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.grblStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedOverrideNumber)).BeginInit();
@@ -84,6 +88,7 @@ namespace GrblOutput {
             // 
             // serialPort1
             // 
+            this.serialPort1.Handshake = System.IO.Ports.Handshake.XOnXOff;
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
             // openFileDialog1
@@ -192,16 +197,17 @@ namespace GrblOutput {
             this.serialResponseList.Location = new System.Drawing.Point(12, 285);
             this.serialResponseList.Name = "serialResponseList";
             this.serialResponseList.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.serialResponseList.Size = new System.Drawing.Size(264, 147);
+            this.serialResponseList.Size = new System.Drawing.Size(584, 121);
             this.serialResponseList.TabIndex = 15;
             this.serialResponseList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.serialResponseList_DrawItem);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.flowControl);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.StartBtn);
             this.groupBox1.Controls.Add(this.StopBtn);
             this.groupBox1.Controls.Add(this.comboBox1);
@@ -212,6 +218,17 @@ namespace GrblOutput {
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial";
+            // 
+            // flowControl
+            // 
+            this.flowControl.AutoSize = true;
+            this.flowControl.Enabled = false;
+            this.flowControl.Location = new System.Drawing.Point(89, 19);
+            this.flowControl.Name = "flowControl";
+            this.flowControl.Size = new System.Drawing.Size(69, 17);
+            this.flowControl.TabIndex = 19;
+            this.flowControl.Text = "Xon/Xoff";
+            this.flowControl.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
@@ -246,7 +263,7 @@ namespace GrblOutput {
             // 
             // ReloadBtn
             // 
-            this.ReloadBtn.Image = global::GrblOutput.Properties.Resources.reload_icon1;
+            this.ReloadBtn.Image = global::GcodeSender.Properties.Resources.reload_icon1;
             this.ReloadBtn.Location = new System.Drawing.Point(73, 61);
             this.ReloadBtn.Name = "ReloadBtn";
             this.ReloadBtn.Size = new System.Drawing.Size(24, 24);
@@ -609,7 +626,7 @@ namespace GrblOutput {
             // 
             // feedHold
             // 
-            this.feedHold.Location = new System.Drawing.Point(283, 247);
+            this.feedHold.Location = new System.Drawing.Point(283, 246);
             this.feedHold.Name = "feedHold";
             this.feedHold.Size = new System.Drawing.Size(314, 33);
             this.feedHold.TabIndex = 35;
@@ -617,11 +634,24 @@ namespace GrblOutput {
             this.feedHold.UseVisualStyleBackColor = true;
             this.feedHold.Click += new System.EventHandler(this.feedHold_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // grblStatus
+            // 
+            this.grblStatus.AutoSize = true;
+            this.grblStatus.Location = new System.Drawing.Point(12, 418);
+            this.grblStatus.Name = "grblStatus";
+            this.grblStatus.Size = new System.Drawing.Size(0, 13);
+            this.grblStatus.TabIndex = 36;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 443);
+            this.Controls.Add(this.grblStatus);
             this.Controls.Add(this.feedHold);
             this.Controls.Add(this.feedResume);
             this.Controls.Add(this.scrollOutputChkbox);
@@ -635,8 +665,8 @@ namespace GrblOutput {
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "G-code sender";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing_1);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -703,6 +733,9 @@ namespace GrblOutput {
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown feedRate;
         private System.Windows.Forms.Button feedHold;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label grblStatus;
+        private System.Windows.Forms.CheckBox flowControl;
 	}
 }
 
